@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>李灵璐 · 学术作品集 · 便当盒玻璃拟态</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== 全局重置 & 莫兰迪色 ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --morandi-blue: #8BA8B8;
+            --morandi-green: #B5C4B1;
+            --morandi-pink: #D4B5B5;
+            --morandi-beige: #E8DDD0;
+            --morandi-purple: #C5C0D0;
+            --morandi-gray: #D5D0CB;
+            --morandi-sage: #B5B8A8;
+            --morandi-sand: #D4C9B8;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.20);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --transition: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --font: 'Inter', -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: #f0ebe5;
+            color: #2c2a2a;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== 视差背景层 ===== */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120vh;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(139, 168, 184, 0.30) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(212, 181, 181, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(181, 196, 177, 0.15) 0%, transparent 60%),
+                #f0ebe5;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        /* ===== 主容器 ===== */
+        .app {
+            position: relative;
+            z-index: 1;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 20px 24px 50px;
+        }
+
+        /* ===== 头部 ===== */
+        .header-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px 22px;
+            margin-bottom: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+        }
+
+        .header-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px 20px;
+        }
+
+        .header-title h1 {
+            font-size: 2.0rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #5a6e7a, #8BA8B8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-title .sub {
+            font-size: 0.82rem;
+            color: #5a6e7a;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            -webkit-text-fill-color: #5a6e7a;
+        }
+
+        .header-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .header-tags span {
+            background: rgba(139, 168, 184, 0.18);
+            backdrop-filter: blur(4px);
+            padding: 3px 14px;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #4a5f6b;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* ===== Tab 导航 ===== */
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.20);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #5a6e7a;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid transparent;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover {
+            background: rgba(139, 168, 184, 0.20);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-btn.active {
+            background: rgba(139, 168, 184, 0.28);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #2c4a55;
+            box-shadow: 0 4px 16px rgba(139, 168, 184, 0.12);
+        }
+
+        /* ===== 内容区 ===== */
+        .tab-content {
+            display: none;
+            animation: fadeSlide 0.45s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== 便当盒网格 ===== */
+        .bento-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: auto;
+        }
+
+        /* ===== 卡片 ===== */
+        .bento-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 20px 22px 18px;
+            box-shadow: var(--glass-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            transform: scale(1.015) translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.10);
+            border-color: rgba(139, 168, 184, 0.40);
+        }
+
+        /* 卡片尺寸变体 */
+        .card-lg {
+            grid-column: span 2;
+        }
+        .card-xl {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .card-full {
+            grid-column: 1 / -1;
+        }
+        .card-sm {
+            grid-column: span 1;
+        }
+        .card-3col {
+            grid-column: span 3;
+        }
+
+        /* ===== 卡片内部 ===== */
+        .card-tag {
+            display: inline-block;
+            font-size: 0.58rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #4a5f6b;
+            background: rgba(139, 168, 184, 0.18);
+            padding: 2px 12px;
+            border-radius: 40px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-tag.green {
+            background: rgba(181, 196, 177, 0.30);
+            color: #3d5a4a;
+        }
+        .card-tag.pink {
+            background: rgba(212, 181, 181, 0.30);
+            color: #6d4a4a;
+        }
+        .card-tag.purple {
+            background: rgba(197, 192, 208, 0.30);
+            color: #4f4a6d;
+        }
+        .card-tag.beige {
+            background: rgba(232, 221, 208, 0.40);
+            color: #5a4f3d;
+        }
+        .card-tag.sage {
+            background: rgba(181, 184, 168, 0.30);
+            color: #4a5a3d;
+        }
+        .card-tag.gold {
+            background: rgba(212, 190, 160, 0.35);
+            color: #6a5a3d;
+        }
+
+        .bento-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #2c2a2a;
+            line-height: 1.3;
+        }
+
+        .bento-card .meta {
+            font-size: 0.68rem;
+            color: #5a6e7a;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .bento-card .desc {
+            font-size: 0.85rem;
+            color: #3d3d3d;
+            line-height: 1.7;
+            flex: 1;
+            margin-bottom: 10px;
+        }
+
+        /* ===== 图文布局 1:1 ===== */
+        .card-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 4px;
+            flex: 1;
+        }
+
+        .card-content-grid .text-side {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-content-grid .text-side .desc {
+            margin-bottom: 0;
+            font-size: 0.82rem;
+        }
+
+        .card-content-grid .chart-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-sm);
+            padding: 10px 8px;
+            min-height: 100px;
+        }
+
+        .card-content-grid .chart-side .chart-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #5a6e7a;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== 图表样式 ===== */
+        .bar-chart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: #4a5f6b;
+        }
+
+        .bar-row .bar-label {
+            width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-row .bar-track {
+            flex: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.20);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-row .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.6s ease;
+        }
+
+        .bar-row .bar-value {
+            width: 32px;
+            text-align: left;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        /* 环形图 */
+        .donut {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(var(--morandi-blue) 0% 50.1%,
+                    var(--morandi-pink) 50.1% 74.9%,
+                    var(--morandi-beige) 74.9% 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .donut::after {
+            content: '';
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(4px);
+        }
+
+        .donut .donut-label {
+            position: relative;
+            z-index: 1;
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #2c2a2a;
+            text-align: center;
+            line-height: 1.2;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 6px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* 数据小卡片 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .data-item {
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: var(--radius-sm);
+            padding: 6px 8px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .data-item .number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c4a55;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .data-item .label {
+            font-size: 0.55rem;
+            color: #5a6e7a;
+            font-weight: 500;
+        }
+
+        /* ===== 毕业论文特色卡片 ===== */
+        .thesis-card {
+            background: linear-gradient(135deg, rgba(139, 168, 184, 0.12), rgba(212, 181, 181, 0.08));
+            border-color: rgba(139, 168, 184, 0.25);
+        }
+
+        .thesis-card:hover {
+            border-color: rgba(139, 168, 184, 0.55);
+        }
+
+        /* ===== 标签云 ===== */
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .highlights span {
+            font-size: 0.6rem;
+            background: rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(4px);
+            padding: 2px 12px;
+            border-radius: 40px;
+            color: #4a5f6b;
+            font-weight: 500;
+        }
+
+        /* ===== 访谈摘录 ===== */
+        .quote-block {
+            background: rgba(255, 255, 255, 0.08);
+            border-left: 3px solid var(--morandi-blue);
+            padding: 6px 12px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.75rem;
+            color: #4a5f6b;
+            margin: 4px 0;
+            font-style: italic;
+        }
+
+        .quote-block strong {
+            color: #2c4a55;
+            font-style: normal;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 1100px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .card-lg,
+            .card-xl,
+            .card-3col {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .card-full {
+                grid-column: 1 / -1;
+            }
+            .card-content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .app {
+                padding: 10px 12px 30px;
+            }
+            .header-glass {
+                padding: 16px 14px 14px;
+            }
+            .header-title h1 {
+                font-size: 1.3rem;
+            }
+            .bento-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .card-lg,
+            .card-xl,
+            .card-full,
+            .card-3col {
+                grid-column: 1;
+                grid-row: auto;
+            }
+            .tab-btn {
+                font-size: 0.65rem;
+                padding: 4px 12px;
+            }
+            .tab-nav {
+                gap: 3px;
+            }
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .card-content-grid {
+                grid-template-columns: 1fr;
+            }
+            .data-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .donut {
+                width: 64px;
+                height: 64px;
+            }
+            .donut::after {
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bento-card {
+                padding: 14px 14px 12px;
+            }
+            .bento-card h3 {
+                font-size: 0.92rem;
+            }
+            .bento-card .desc {
+                font-size: 0.78rem;
+            }
+        }
+
+        /* ===== 滚动条 ===== */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 168, 184, 0.35);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 168, 184, 0.55);
+        }
+
+        /* ===== 工具 ===== */
+        .mt-1 {
+            margin-top: 4px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-1 {
+            gap: 4px;
+        }
+        .gap-2 {
+            gap: 8px;
+        }
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .items-center {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 视差背景 ===== -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+
+    <!-- ===== 主应用 ===== -->
+    <div class="app">
+
+        <!-- ===== 玻璃头部 ===== -->
+        <header class="header-glass">
+            <div class="header-top">
+                <div class="header-title">
+                    <h1>📚 李灵璐 · 学术作品集</h1>
+                    <div class="sub">电子科技大学中山学院 · 工商管理 21级 · 研究 &amp; 商业分析</div>
+                </div>
+                <div class="header-tags">
+                    <span>📊 数据分析</span>
+                    <span>📈 战略研究</span>
+                    <span>🧠 消费者行为</span>
+                    <span>💡 品牌营销</span>
+                    <span>🚗 产业研究</span>
+                </div>
+            </div>
+            <nav class="tab-nav" id="tabNav">
+                <button class="tab-btn active" data-tab="marketing">📣 市场调研</button>
+                <button class="tab-btn" data-tab="strategy">📊 战略管理</button>
+                <button class="tab-btn" data-tab="ecommerce">🛒 电商供应链</button>
+                <button class="tab-btn" data-tab="brand">🎯 品牌营销</button>
+                <button class="tab-btn" data-tab="data">📉 数据分析</button>
+                <button class="tab-btn" data-tab="method">🔬 研究方法</button>
+            </nav>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- TAB 1: 市场调研 -->
+        <!-- ============================================================ -->
+        <section class="tab-content active" id="tab-marketing">
+            <div class="bento-grid">
+
+                <!-- 卡片1: 新媒体营销对旅游意愿影响 -->
+                <div class="bento-card card-xl">
+                    <span class="card-tag">📋 问卷设计 · 核心研究</span>
+                    <h3>新媒体营销对民众旅游意愿的影响</h3>
+                    <div class="meta">市场调查与预测 · 2026 · 基于TAM模型</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>理论框架：</strong>技术接受模型 (TAM) 扩展，引入「对新媒体营销的态度」作为中介变量，新增「产品涉入度」为调节变量。
+                                <br /><br />
+                                <strong>信效度：</strong>Cronbach's α = 0.925（极佳），各维度 α > 0.70。KMO 均 > 0.6，Bartlett 检验 p < 0.001。
+                                <br /><br />
+                                <strong>关键发现：</strong>感知信任 (β=0.457, p=0.000) 对旅游意愿解释力最强 (R²=38.6%)；感知愉悦性 (β=0.582) 对营销态度影响最显著。
+                                <br /><br />
+                                <strong>中介效应：</strong>对新媒体营销的态度在感知易用性、有用性、愉悦性、信任与旅游意愿间起部分中介作用。
+                            </div>
+                            <div class="highlights">
+                                <span>📊 信度 α=0.925</span>
+                                <span>📌 中介效应</span>
+                                <span>🧩 产品涉入度调节</span>
+                                <span>📝 30+ 测题</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">📊 回归分析 · 标准化系数 β</div>
+                            <div class="bar-chart" style="width:100%;">
+                                <div class="bar-row">
+                                    <span class="bar-label">感知信任</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:45.7%;background:var(--morandi-blue);"></div></div>
+                                    <span class="bar-value">0.457</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">感知愉悦</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:58.2%;background:var(--morandi-pink);"></div></div>
+                                    <span class="bar-value">0.582</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">感知有用</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:36.0%;background:var(--morandi-green);"></div></div>
+                                    <span class="bar-value">0.360</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">感知易用</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:28.0%;background:var(--morandi-sage);"></div></div>
+                                    <span class="bar-value">0.280</span>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:10px;margin-top:4px;flex-wrap:wrap;justify-content:center;">
+                                <span style="font-size:0.55rem;background:rgba(255,255,255,0.15);padding:2px 10px;border-radius:20px;">R² = 38.6%</span>
+                                <span style="font-size:0.55rem;background:rgba(255,255,255,0.15);padding:2px 10px;border-radius:20px;">F = 49.303</span>
+                                <span style="font-size:0.55rem;background:rgba(255,255,255,0.15);padding:2px 10px;border-radius:20px;">p = 0.000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卡片2: 夜经济调研 -->
+                <div class="bento-card card-lg">
+                    <span class="card-tag green">📋 调研报告</span>
+                    <h3>中山市夜经济下大学生夜商圈现象</h3>
+                    <div class="meta">市场调研 · 2023.10 · 第10组</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>样本：</strong>200份问卷，有效178份 (有效率89%)。女性占比58.7%，男性41.3%。
+                                <br /><br />
+                                <strong>核心发现：</strong>近九成大学生有夜间消费经历；女性逛夜商圈比例 (60.61%) 高于男性 (40.69%)；月可支配收入 1001-1500元 占比最高 (40.4%)。
+                                <br /><br />
+                                <strong>建议：</strong>改善基础设施、丰富消费场景、政府政策支持。
+                            </div>
+                            <div class="highlights">
+                                <span>🌃 夜经济</span>
+                                <span>🎓 大学生群体</span>
+                                <span>📈 有效样本 89%</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">👥 性别 · 夜商圈消费比例</div>
+                            <div style="display:flex;gap:12px;align-items:center;justify-content:center;width:100%;flex-wrap:wrap;">
+                                <div style="text-align:center;">
+                                    <div style="width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--morandi-blue) 0% 40.7%, var(--morandi-pink) 40.7% 100%);position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                                        <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:20px;font-size:0.5rem;font-weight:700;z-index:1;">40.7%</span>
+                                    </div>
+                                    <span style="font-size:0.55rem;color:#4a5f6b;">男性</span>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--morandi-pink) 0% 60.6%, var(--morandi-blue) 60.6% 100%);position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                                        <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:20px;font-size:0.5rem;font-weight:700;z-index:1;">60.6%</span>
+                                    </div>
+                                    <span style="font-size:0.55rem;color:#4a5f6b;">女性</span>
+                                </div>
+                            </div>
+                            <div class="data-grid" style="margin-top:4px;">
+                                <div class="data-item"><span class="number">89%</span><span class="label">有效率</span></div>
+                                <div class="data-item"><span class="number">40.4%</span><span class="label">月收入1001-1500</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 卡片3: 狂飙PPT -->
+                <div class="bento-card card-sm">
+                    <span class="card-tag beige">📊 展示PPT</span>
+                    <h3>从"狂飙"到狂飙 · 新媒体营销</h3>
+                    <div class="meta">小组展示 · 2026</div>
+                    <div class="card-content-grid" style="grid-template-columns:1fr;">
+                        <div class="text-side">
+                            <div class="desc">
+                                以《狂飙》《去有风的地方》等影视IP为案例，分析新媒体营销对旅游意愿的影响。包含描述性统计、信度分析、因子分析、回归分析及中介效应检验。
+                            </div>
+                            <div class="highlights">
+                                <span>🎬 影视IP驱动</span>
+                                <span>📊 回归分析</span>
+                                <span>📌 中介效应</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2: 战略管理 -->
+        <!-- ============================================================ -->
+        <section class="tab-content" id="tab-strategy">
+            <div class="bento-grid">
+
+                <!-- 毕业论文 - 超大卡片 -->
+                <div class="bento-card card-xl thesis-card">
+                    <span class="card-tag gold">🎓 毕业论文 · 核心成果</span>
+                    <h3>汽车产业的颠覆与融合：丰田的探索性案例研究</h3>
+                    <div class="meta">工商管理 · 2025.05 · 指导教师：张立中 特聘副教授</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc" style="font-size:0.82rem;">
+                                <strong>研究背景：</strong>新能源汽车技术作为颠覆性创新，正深刻改变汽车产业格局。2025年1月，新能源汽车国内销量同比增长26.2%，出口增长49.6%；传统燃油车销量同比下降15.1%。
+                                <br /><br />
+                                <strong>理论框架：</strong>基于Chin (2018)「阴阳和谐」五阶段模型：<strong>矛盾 → 冲突 → 沟通 → 调整 → 创新</strong>，结合「三链耦合」(产业链·创新链·资金链) 分析产业生态。
+                                <br /><br />
+                                <strong>方法：</strong>个案分析 + 次级资料 + 三角校正法。实地访谈丰田销售人员与燃油车用户，获取一手资料。
+                                <br /><br />
+                                <strong>核心发现：</strong>丰田通过多路径战略 (HEV/PHEV/BEV/FCEV)、固态电池研发、精益生产与数字化融合，成功实现新能源技术与现有业务模式的协同创新。
+                            </div>
+                            <div class="highlights">
+                                <span>🚗 颠覆性创新</span>
+                                <span>⚡ 新能源汽车</span>
+                                <span>🔗 三链耦合</span>
+                                <span>📊 五阶段模型</span>
+                                <span>🗣 实地访谈</span>
+                                <span>🏭 精益生产</span>
+                            </div>
+                        </div>
+                        <div class="chart-side" style="gap:6px;">
+                            <div class="chart-label">📈 燃油车 vs 新能源车 · 2025.01 同比</div>
+                            <div class="bar-chart" style="width:100%;">
+                                <div class="bar-row">
+                                    <span class="bar-label">国内销量</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:26.2%;background:var(--morandi-green);"></div></div>
+                                    <span class="bar-value" style="color:var(--morandi-green);">+26.2%</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">燃油车</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:15.1%;background:var(--morandi-pink);"></div></div>
+                                    <span class="bar-value" style="color:var(--morandi-pink);">-15.1%</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">出口</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:49.6%;background:var(--morandi-blue);"></div></div>
+                                    <span class="bar-value" style="color:var(--morandi-blue);">+49.6%</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">燃油车出口</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:6.6%;background:var(--morandi-gray);"></div></div>
+                                    <span class="bar-value" style="color:var(--morandi-gray);">-6.6%</span>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:2px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">新能源乘用车 +25.9%</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">15-20万区间 +21.4%</span>
+                            </div>
+                            <div class="quote-block" style="width:100%;font-size:0.68rem;">
+                                "丰田采取逐渐式转型策略，燃油车和新能源车并排展示，强调HEV的过渡和BEV的未来。" —— 丰田销售访谈
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 宝洁 -->
+                <div class="bento-card card-lg">
+                    <span class="card-tag pink">📄 课程论文</span>
+                    <h3>宝洁多元化品牌战略研究分析</h3>
+                    <div class="meta">战略管理 · 2024.05</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>核心战略：</strong>「一品多牌」+ 市场细分 (地理/人口/心理/行为) + 差异化定位 + 品牌经理制。
+                                <br /><br />
+                                <strong>数据：</strong>2023年净销售额820亿美元，有机增长7%；中国家庭渗透率95.5%，1.53亿城市家庭。
+                                <br /><br />
+                                <strong>挑战：</strong>高昂投入成本、品牌管理复杂度、组织架构复杂性。
+                            </div>
+                            <div class="highlights">
+                                <span>🧴 多品牌战略</span>
+                                <span>🎯 市场细分</span>
+                                <span>📊 820亿$</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">📊 宝洁中国 · 家庭渗透率</div>
+                            <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                                <div style="width:100%;height:20px;background:rgba(255,255,255,0.15);border-radius:20px;overflow:hidden;">
+                                    <div style="width:95.5%;height:100%;background:linear-gradient(90deg,var(--morandi-blue),var(--morandi-green));border-radius:20px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:0.5rem;font-weight:700;color:white;">95.5%</div>
+                                </div>
+                                <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:2px;">
+                                    <span style="font-size:0.55rem;background:rgba(255,255,255,0.10);padding:2px 8px;border-radius:20px;">1.53亿家庭</span>
+                                    <span style="font-size:0.55rem;background:rgba(255,255,255,0.10);padding:2px 8px;border-radius:20px;">年销820亿$</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 霸王茶姬 -->
+                <div class="bento-card card-sm">
+                    <span class="card-tag green">📄 案例分析</span>
+                    <h3>霸王茶姬 · 新中式茶饮战略</h3>
+                    <div class="meta">战略管理 · 发展历程</div>
+                    <div class="card-content-grid" style="grid-template-columns:1fr;">
+                        <div class="text-side">
+                            <div class="desc" style="font-size:0.8rem;">
+                                <strong>规模：</strong>全球2500+门店，国风茶饮榜首。私域100万会员，月GMV近1000万。
+                                <br />
+                                <strong>策略：</strong>大单品 (伯牙绝弦占35%) + 国风定位 + 高位渠道 + 融资超3亿元。
+                            </div>
+                            <div class="highlights">
+                                <span>🍵 伯牙绝弦 35%</span>
+                                <span>🌏 2500+门店</span>
+                                <span>💰 融资超3亿</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 华为 -->
+                <div class="bento-card card-sm">
+                    <span class="card-tag purple">📊 小组展示</span>
+                    <h3>华为组织设计演变</h3>
+                    <div class="meta">管理学 · 第6小组</div>
+                    <div class="card-content-grid" style="grid-template-columns:1fr;">
+                        <div class="text-side">
+                            <div class="desc" style="font-size:0.8rem;">
+                                直线制 → 职能制 → 准事业部矩阵结构。《华为基本法》为里程碑，支撑企业从创业期到世界500强的持续增长。
+                            </div>
+                            <div class="highlights">
+                                <span>🏛 直线制→矩阵</span>
+                                <span>📜 华为基本法</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 3: 电商供应链 -->
+        <!-- ============================================================ -->
+        <section class="tab-content" id="tab-ecommerce">
+            <div class="bento-grid">
+
+                <div class="bento-card card-full">
+                    <span class="card-tag beige">📄 课程论文</span>
+                    <h3>电子商务和供应链管理：如何优化供应链流程</h3>
+                    <div class="meta">电子商务概论 · 2023.06</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>文献综述：</strong>系统梳理电商供应链优化研究脉络，涵盖汤炜光 (战略视角)、沈赞 (流程重组)、李航 (跨境电商)、陈潺 (低碳供应链) 等核心观点。
+                                <br /><br />
+                                <strong>双层面优化框架：</strong>
+                                <br />• <strong>宏观层面：</strong>数学模型优化物流配送，机器学习算法预测订单需求。
+                                <br />• <strong>微观层面：</strong>RFID库存监控，ABC分类管理，精细化采购协同。
+                                <br /><br />
+                                <strong>核心价值：</strong>强调定量分析与实证研究结合，为电商企业供应链效率提升提供系统路径。
+                            </div>
+                            <div class="highlights">
+                                <span>📦 流程优化</span>
+                                <span>📊 定量+定性</span>
+                                <span>🤖 机器学习</span>
+                                <span>🔗 信息共享</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">🔧 双层面优化框架</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+                                <div style="background:rgba(139,168,184,0.20);border-radius:var(--radius-sm);padding:8px;text-align:center;">
+                                    <div style="font-size:0.6rem;font-weight:700;color:#2c4a55;">宏观层面</div>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;margin-top:2px;">数学模型 · 算法优化<br/>物流配送 · 订单预测</div>
+                                </div>
+                                <div style="background:rgba(212,181,181,0.20);border-radius:var(--radius-sm);padding:8px;text-align:center;">
+                                    <div style="font-size:0.6rem;font-weight:700;color:#6d4a4a;">微观层面</div>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;margin-top:2px;">RFID · ABC分类<br/>库存监控 · 采购协同</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">效率提升</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">成本控制</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">响应速度</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 4: 品牌营销 -->
+        <!-- ============================================================ -->
+        <section class="tab-content" id="tab-brand">
+            <div class="bento-grid">
+
+                <!-- 花西子 -->
+                <div class="bento-card card-xl">
+                    <span class="card-tag pink">📄 课程论文</span>
+                    <h3>价值共创对国货美妆行业的发展探究——以花西子为例</h3>
+                    <div class="meta">现代服务管理 · 2022.12</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>理论框架：</strong>DART模型 (对话·获取·风险评估·透明性) 解构花西子的内容营销与用户共创模式。
+                                <br /><br />
+                                <strong>核心策略：</strong>• 对话：围绕Z世代打造产品，收集用户反馈
+                                <br />• 获取：招募体验官参与研发
+                                <br />• 风险评估：与头部主播合作，降低信用风险
+                                <br />• 透明性：公开产品成分，确保信息对称
+                                <br /><br />
+                                <strong>成果：</strong>3年销量30亿，成为国潮品牌领头羊。服务主导逻辑下，消费者成为共同设计者、销售者和生产者。
+                            </div>
+                            <div class="highlights">
+                                <span>🌸 DART模型</span>
+                                <span>🗣 用户共创</span>
+                                <span>🇨🇳 国潮文化</span>
+                                <span>📈 30亿销量</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">🌸 DART 模型 · 花西子实践</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+                                <div style="background:rgba(139,168,184,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.7rem;font-weight:700;color:#2c4a55;">💬 对话</span>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;">Z世代 · 用户反馈</div>
+                                </div>
+                                <div style="background:rgba(181,196,177,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.7rem;font-weight:700;color:#3d5a4a;">📱 获取</span>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;">体验官 · 研发参与</div>
+                                </div>
+                                <div style="background:rgba(212,181,181,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.7rem;font-weight:700;color:#6d4a4a;">🛡 风险评估</span>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;">头部主播 · 信用保障</div>
+                                </div>
+                                <div style="background:rgba(232,221,208,0.20);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.7rem;font-weight:700;color:#5a4f3d;">🔍 透明性</span>
+                                    <div style="font-size:0.55rem;color:#4a5f6b;">成分公开 · 信息对称</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">服务主导逻辑</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">国潮品牌</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 伴学笔记 -->
+                <div class="bento-card card-lg">
+                    <span class="card-tag green">📄 课程论文</span>
+                    <h3>伴学笔记小程序网络营销策略</h3>
+                    <div class="meta">网络营销 · 2024</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>分析框架：</strong>PEST + SWOT + STP 三维分析。
+                                <br /><br />
+                                <strong>策略亮点：</strong>• 内容营销：价值性+趣味性+一致性内容
+                                <br />• 社交媒体：微博/微信/抖音多平台运营
+                                <br />• 创新营销：个性化推荐 + VR沉浸式学习
+                                <br /><br />
+                                <strong>目标受众：</strong>中小学生 · 大学生 · 考研党 · 职业培训者
+                            </div>
+                            <div class="highlights">
+                                <span>📱 PEST+SWOT+STP</span>
+                                <span>🎯 精准营销</span>
+                                <span>🤖 智能推荐</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">📊 营销策略矩阵</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+                                <div style="background:rgba(139,168,184,0.12);border-radius:var(--radius-sm);padding:4px;text-align:center;">
+                                    <span style="font-size:0.55rem;font-weight:600;">内容营销</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">价值 · 趣味 · 一致</div>
+                                </div>
+                                <div style="background:rgba(212,181,181,0.12);border-radius:var(--radius-sm);padding:4px;text-align:center;">
+                                    <span style="font-size:0.55rem;font-weight:600;">社媒营销</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">微博 · 微信 · 抖音</div>
+                                </div>
+                                <div style="background:rgba(181,196,177,0.12);border-radius:var(--radius-sm);padding:4px;text-align:center;">
+                                    <span style="font-size:0.55rem;font-weight:600;">SEO</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">搜索引擎优化</div>
+                                </div>
+                                <div style="background:rgba(197,192,208,0.12);border-radius:var(--radius-sm);padding:4px;text-align:center;">
+                                    <span style="font-size:0.55rem;font-weight:600;">VR创新</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">沉浸式学习</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 新媒体营销PPT 小卡片 -->
+                <div class="bento-card card-sm">
+                    <span class="card-tag beige">📊 展示PPT</span>
+                    <h3>新媒体营销 · 旅游意愿</h3>
+                    <div class="meta">小组展示 · 2026</div>
+                    <div class="card-content-grid" style="grid-template-columns:1fr;">
+                        <div class="text-side">
+                            <div class="desc" style="font-size:0.78rem;">
+                                影视IP驱动旅游经济：《狂飙》《去有风的地方》等热播剧带动拍摄地旅游增长。
+                            </div>
+                            <div class="highlights">
+                                <span>🎬 影视IP</span>
+                                <span>📊 数据驱动</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 5: 数据分析 -->
+        <!-- ============================================================ -->
+        <section class="tab-content" id="tab-data">
+            <div class="bento-grid">
+
+                <div class="bento-card card-full">
+                    <span class="card-tag purple">📄 课程论文</span>
+                    <h3>抖音用户行为的数据分析</h3>
+                    <div class="meta">大数据与商业分析 · 2024 · Python + SPSS</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>数据规模：</strong>12.5万条互动数据 (2022.7.24-31，1000名用户)。
+                                <br /><br />
+                                <strong>核心发现：</strong>
+                                <br />• 点赞行为 (50.09%) 远多于转发 (24.87%)，用户更倾向轻量级互动
+                                <br />• 食物/娱乐类视频互动最高，16种视频类别观看量均7000-8000
+                                <br />• 晚间 (18:00-22:00) 为活跃高峰，点赞数显著上升
+                                <br /><br />
+                                <strong>实践价值：</strong>为平台内容推荐算法优化、创作者发布时间策略提供数据驱动决策依据。
+                            </div>
+                            <div class="highlights">
+                                <span>🐍 Python 分析</span>
+                                <span>📈 时间序列</span>
+                                <span>🎬 16种视频类别</span>
+                                <span>🌙 晚间活跃高峰</span>
+                                <span>📊 12.5万条</span>
+                            </div>
+                        </div>
+                        <div class="chart-side" style="gap:6px;">
+                            <div class="chart-label">📊 用户互动行为分布</div>
+                            <div style="display:flex;gap:14px;align-items:center;justify-content:center;width:100%;flex-wrap:wrap;">
+                                <div style="text-align:center;">
+                                    <div style="width:70px;height:70px;border-radius:50%;background:conic-gradient(var(--morandi-blue) 0% 50.1%, var(--morandi-gray) 50.1% 100%);position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                                        <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:20px;font-size:0.5rem;font-weight:700;z-index:1;">50.1%</span>
+                                    </div>
+                                    <span style="font-size:0.55rem;color:#4a5f6b;">👍 点赞</span>
+                                </div>
+                                <div style="text-align:center;">
+                                    <div style="width:70px;height:70px;border-radius:50%;background:conic-gradient(var(--morandi-pink) 0% 24.9%, var(--morandi-gray) 24.9% 100%);position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                                        <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:20px;font-size:0.5rem;font-weight:700;z-index:1;">24.9%</span>
+                                    </div>
+                                    <span style="font-size:0.55rem;color:#4a5f6b;">🔄 转发</span>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:2px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">食物类互动最高</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">晚间活跃峰值</span>
+                            </div>
+                            <div class="data-grid" style="margin-top:2px;">
+                                <div class="data-item"><span class="number">125k</span><span class="label">总数据量</span></div>
+                                <div class="data-item"><span class="number">16</span><span class="label">视频类别</span></div>
+                                <div class="data-item"><span class="number">7d</span><span class="label">监测周期</span></div>
+                                <div class="data-item"><span class="number">1000</span><span class="label">用户数</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 6: 研究方法 -->
+        <!-- ============================================================ -->
+        <section class="tab-content" id="tab-method">
+            <div class="bento-grid">
+
+                <!-- 信息茧房 -->
+                <div class="bento-card card-lg">
+                    <span class="card-tag beige">📄 课程论文</span>
+                    <h3>信息茧房现象的多维研究综述</h3>
+                    <div class="meta">管理研究方法论 · 2024</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>概念：</strong>信息茧房 (Information Cocoons) —— 个体在信息海洋中自我设限，陷入类似蚕茧的封闭空间 (桑斯坦, 2006)。
+                                <br /><br />
+                                <strong>成因多维分析：</strong>
+                                <br />• <strong>个体心理：</strong>选择性心理、群体认同、确认偏误
+                                <br />• <strong>技术驱动：</strong>算法推荐系统、社交媒体设计
+                                <br />• <strong>社会环境：</strong>社会网络结构、文化差异
+                                <br /><br />
+                                <strong>影响：</strong>认知偏差、群体极化、民主威胁
+                            </div>
+                            <div class="highlights">
+                                <span>📚 文献综述</span>
+                                <span>🧠 选择性心理</span>
+                                <span>📱 算法推荐</span>
+                                <span>⚖️ 社会极化</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">🧩 信息茧房成因模型</div>
+                            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;">
+                                <div style="background:rgba(139,168,184,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.65rem;font-weight:700;color:#2c4a55;">🧠 心理</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">选择性·认同</div>
+                                </div>
+                                <div style="background:rgba(212,181,181,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.65rem;font-weight:700;color:#6d4a4a;">💻 技术</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">算法·推荐</div>
+                                </div>
+                                <div style="background:rgba(181,196,177,0.15);border-radius:var(--radius-sm);padding:6px;text-align:center;">
+                                    <span style="font-size:0.65rem;font-weight:700;color:#3d5a4a;">🌐 社会</span>
+                                    <div style="font-size:0.5rem;color:#4a5f6b;">网络·文化</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">跨学科视角</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">信息多样性</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 小红书广告回避 -->
+                <div class="bento-card card-lg">
+                    <span class="card-tag pink">📊 小组展示</span>
+                    <h3>小红书自媒体广告回避现象及影响因素</h3>
+                    <div class="meta">管理研究方法论 · 小组作业 · SPSS 27</div>
+                    <div class="card-content-grid">
+                        <div class="text-side">
+                            <div class="desc">
+                                <strong>方法：</strong>420份有效问卷 + 20名用户深度访谈。
+                                <br /><br />
+                                <strong>影响因素 (5个)：</strong>
+                                <br />• 感知目标障碍
+                                <br />• 感知广告杂乱
+                                <br />• 既往消极体验
+                                <br />• 广告刺激强度
+                                <br />• 广告内容可信度
+                                <br /><br />
+                                <strong>核心结论：</strong>五个因素均对广告回避反应构成显著影响，为自媒体广告优化提供实证依据。
+                            </div>
+                            <div class="highlights">
+                                <span>📋 问卷+访谈</span>
+                                <span>📊 SPSS 27</span>
+                                <span>🧩 5大因素</span>
+                                <span>📌 420份样本</span>
+                            </div>
+                        </div>
+                        <div class="chart-side">
+                            <div class="chart-label">📊 广告回避影响因素</div>
+                            <div class="bar-chart" style="width:100%;">
+                                <div class="bar-row">
+                                    <span class="bar-label" style="width:50px;">感知目标障碍</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--morandi-blue);"></div></div>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label" style="width:50px;">感知广告杂乱</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:76%;background:var(--morandi-pink);"></div></div>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label" style="width:50px;">既往消极体验</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--morandi-green);"></div></div>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label" style="width:50px;">广告刺激强度</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:61%;background:var(--morandi-sage);"></div></div>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label" style="width:50px;">内容可信度</span>
+                                    <div class="bar-track"><div class="bar-fill" style="width:73%;background:var(--morandi-purple);"></div></div>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px;">
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">认知回避</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">情感回避</span>
+                                <span style="font-size:0.5rem;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:20px;">行为回避</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===== 页脚 ===== -->
+        <footer style="text-align:center;padding:28px 0 6px;color:#6a7e8a;font-size:0.75rem;border-top:1px solid rgba(255,255,255,0.12);margin-top:36px;backdrop-filter:blur(4px);">
+            <p>基于 13 份课程论文 · 调研报告 · 商业计划书 · 毕业论文 整理汇编</p>
+            <p style="margin-top:3px;font-size:0.65rem;opacity:0.7;">电子科技大学中山学院 · 工商管理专业 · 2022–2026</p>
+        </footer>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JavaScript -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- Tab 切换 ----------
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = {
+                marketing: document.getElementById('tab-marketing'),
+                strategy: document.getElementById('tab-strategy'),
+                ecommerce: document.getElementById('tab-ecommerce'),
+                brand: document.getElementById('tab-brand'),
+                data: document.getElementById('tab-data'),
+                method: document.getElementById('tab-method')
+            };
+
+            function activateTab(tabId) {
+                tabs.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabId);
+                });
+                Object.keys(contents).forEach(key => {
+                    contents[key].classList.toggle('active', key === tabId);
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    if (tabId) activateTab(tabId);
+                });
+            });
+
+            // ---------- 视差滚动 ----------
+            const bg = document.getElementById('parallaxBg');
+            let ticking = false;
+
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const scrollY = window.scrollY;
+                        bg.style.transform = 'translateY(' + (scrollY * 0.5) + 'px)';
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // 初始位置
+            bg.style.transform = 'translateY(0px)';
+
+            // ---------- 卡片微交互增强 ----------
+            document.querySelectorAll('.bento-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease';
+                });
+            });
+
+            console.log('✅ 便当盒 · 玻璃拟态 · 视差滚动 已启动');
+        })();
+    </script>
+
+</body>
+</html>
